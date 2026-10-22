@@ -45,6 +45,7 @@
   /* ── 標題列 ── */
   .topbar { display: flex; align-items: center; gap: 12px; }
   .badge {
+    position: relative;
     background: var(--accent);
     color: #111;
     font-weight: 800;
@@ -55,6 +56,20 @@
     line-height: 1.1;
     flex: none;
   }
+  /* 兔耳：呼應櫻島麻衣 */
+  .badge::before, .badge::after {
+    content: "";
+    position: absolute;
+    top: -9px;
+    width: 9px;
+    height: 16px;
+    background: linear-gradient(180deg, #fff 0%, #fff 52%, #f7ccd6 53%, #f7ccd6 100%);
+    border: 1px solid #e9bfc8;
+    border-radius: 60% 60% 42% 42%;
+    transform-origin: bottom center;
+  }
+  .badge::before { left: 7px; transform: rotate(-14deg); }
+  .badge::after { left: 19px; transform: rotate(14deg); }
   .head-copy { min-width: 0; }
   .head-copy h1 {
     margin: 0;
@@ -89,6 +104,9 @@
     position: absolute;
     left: 10px;
     bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
     font-size: 11px;
     color: #fff;
     background: rgba(13,17,23,.58);
@@ -97,6 +115,33 @@
     border-radius: 999px;
     backdrop-filter: blur(6px);
   }
+  .hero figcaption svg { width: 12px; height: 12px; flex: none; }
+  svg.bunny { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .name-tag {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+    writing-mode: vertical-rl;
+    background: rgba(255,255,255,.9);
+    color: #a8344c;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: .16em;
+    padding: 8px 5px;
+    border-radius: 8px;
+    border: 1px solid rgba(168,52,76,.22);
+    box-shadow: 0 4px 14px rgba(0,0,0,.16);
+  }
+  .mai-line {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 9px 2px 0;
+    font-size: 11.5px;
+    color: #e9a8b6;
+  }
+  .mai-line svg { width: 14px; height: 14px; flex: none; }
 
   /* ── 班次 ── */
   .service { margin-top: 16px; border-top: 1px solid var(--line); padding-top: 14px; }
@@ -226,8 +271,16 @@
 
   <figure class="hero">
     <img src="character.jpg" alt="B3A 路線人物插畫">
-    <figcaption>B3A 實時到站</figcaption>
+    <span class="name-tag">櫻島麻衣</span>
+    <figcaption>
+      <svg class="bunny" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.2 9.4C6.6 7 6.1 4.2 7 3.5c.9-.6 2.2 1.4 3 3.6"/><path d="M15.8 9.4c1.6-2.4 2.1-5.2 1.2-5.9-.9-.6-2.2 1.4-3 3.6"/><path d="M12 21c-3.5 0-5.8-2.3-5.8-5.2C6.2 12.1 8.7 9 12 9s5.8 3.1 5.8 6.8C17.8 18.7 15.5 21 12 21Z"/><circle cx="9.9" cy="14.2" r=".7" fill="currentColor" stroke="none"/><circle cx="14.1" cy="14.2" r=".7" fill="currentColor" stroke="none"/></svg>
+      B3A 實時到站
+    </figcaption>
   </figure>
+  <div class="mai-line">
+    <svg class="bunny" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.2 9.4C6.6 7 6.1 4.2 7 3.5c.9-.6 2.2 1.4 3 3.6"/><path d="M15.8 9.4c1.6-2.4 2.1-5.2 1.2-5.9-.9-.6-2.2 1.4-3 3.6"/><path d="M12 21c-3.5 0-5.8-2.3-5.8-5.2C6.2 12.1 8.7 9 12 9s5.8 3.1 5.8 6.8C17.8 18.7 15.5 21 12 21Z"/><circle cx="9.9" cy="14.2" r=".7" fill="currentColor" stroke="none"/><circle cx="14.1" cy="14.2" r=".7" fill="currentColor" stroke="none"/></svg>
+    兔女郎學姐 · 陪你等 B3A
+  </div>
 
   <section class="service" id="service-out">
     <h2>富泰邨 <span class="arrow">→</span> 深圳灣口岸</h2>
