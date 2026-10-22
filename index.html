@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>B3A · Fu Tai Estate ↔ Shenzhen Bay Port</title>
+<title>B3A · 富泰邨 ↔ 深圳灣口岸</title>
 <style>
   :root {
     --bg: #0d1117;
@@ -22,7 +22,7 @@
     place-items: center;
     background: radial-gradient(1200px 700px at 50% -10%, #1b2735 0%, var(--bg) 55%);
     color: var(--text);
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: "PingFang HK", "Microsoft JhengHei", "Noto Sans TC", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     padding: 24px;
   }
   .card {
@@ -43,8 +43,9 @@
     padding: 8px 14px;
     border-radius: 10px;
     line-height: 1;
+    flex: none;
   }
-  .route { font-size: 13px; color: var(--muted); line-height: 1.45; }
+  .route { font-size: 13px; color: var(--muted); line-height: 1.5; }
   .route strong { color: var(--text); font-size: 15px; display: block; }
   .arrow { color: var(--accent); }
 
@@ -75,9 +76,11 @@
     font-weight: 750;
     letter-spacing: -0.5px;
     color: var(--accent);
-    min-width: 92px;
+    min-width: 108px;
     text-align: right;
+    white-space: nowrap;
   }
+  .row .mins.text { font-size: 18px; letter-spacing: 0; }
   .row .mins small { font-size: 13px; font-weight: 600; color: var(--muted); margin-left: 4px; }
   .row.now .mins { color: #7ee787; }
   .rmk { grid-column: 1 / -1; font-size: 12px; color: #d29922; margin-top: -6px; }
@@ -88,9 +91,9 @@
     border: 1px dashed var(--line);
     border-radius: 12px;
     font-size: 13.5px;
-    line-height: 1.6;
+    line-height: 1.7;
   }
-  .note { margin-top: 10px; font-size: 11.5px; color: #6f7d8a; line-height: 1.5; }
+  .note { margin-top: 10px; font-size: 11.5px; color: #6f7d8a; line-height: 1.6; }
 
   footer {
     display: flex;
@@ -117,6 +120,7 @@
     font-size: 12px;
     cursor: pointer;
     flex: none;
+    font-family: inherit;
   }
   button:hover { border-color: var(--accent-dim); color: var(--accent); }
   button:disabled { opacity: .5; cursor: default; }
@@ -128,29 +132,29 @@
   <header>
     <div class="badge">B3A</div>
     <div class="route">
-      <strong>Fu Tai Estate 富泰邨 <span class="arrow">↔</span> Shenzhen Bay Port 深圳灣口岸</strong>
-      Citybus · both directions
+      <strong>富泰邨 <span class="arrow">↔</span> 深圳灣口岸</strong>
+      城巴 · 雙向
     </div>
   </header>
 
   <section class="service" id="service-out">
-    <h2>Fu Tai Estate <span class="arrow">→</span> Shenzhen Bay Port</h2>
-    <div class="meta">Stop: Fu Tai Estate, Castle Peak Road</div>
+    <h2>富泰邨 <span class="arrow">→</span> 深圳灣口岸</h2>
+    <div class="meta">上車站：富泰邨（青山公路）</div>
     <div class="board" aria-live="polite"></div>
   </section>
 
   <section class="service" id="service-in">
-    <h2>Shenzhen Bay Port <span class="arrow">→</span> Fu Tai Estate</h2>
-    <div class="meta">Stop: Shenzhen Bay Port terminus</div>
+    <h2>深圳灣口岸 <span class="arrow">→</span> 富泰邨</h2>
+    <div class="meta">上車站：深圳灣口岸總站</div>
     <div class="board" aria-live="polite"></div>
-    <div class="note">Return journeys continue to Shan King Estate. Fu Tai Estate is the first stop after the port, about 8–10 minutes into the trip.</div>
+    <div class="note">回程班次終點為山景邨；富泰邨是過關後第一站，車程約 8–10 分鐘。</div>
   </section>
 
   <footer>
-    <div class="status"><span class="dot load" id="dot"></span><span id="status">Connecting…</span></div>
-    <button id="refresh" type="button">Refresh</button>
+    <div class="status"><span class="dot load" id="dot"></span><span id="status">連線中…</span></div>
+    <button id="refresh" type="button">重新整理</button>
   </footer>
-  <div class="source">Data: Citybus open data via DATA.GOV.HK · refreshed every 30 s</div>
+  <div class="source">資料來源：城巴開放數據（DATA.GOV.HK）· 每 30 秒自動更新</div>
 </main>
 
 <script>
@@ -160,8 +164,8 @@
   const REFRESH_MS = 30000;
 
   const SERVICES = [
-    { el: "#service-out", stop: "003261", dir: "O" },  // Fu Tai Estate -> Shenzhen Bay Port
-    { el: "#service-in",  stop: "003208", dir: "I" }   // Shenzhen Bay Port -> Fu Tai Estate
+    { el: "#service-out", stop: "003261", dir: "O" },  // 富泰邨 -> 深圳灣口岸
+    { el: "#service-in",  stop: "003208", dir: "I" }   // 深圳灣口岸 -> 富泰邨
   ];
 
   const statusEl = document.getElementById("status");
@@ -180,35 +184,34 @@
   function fmtLeft(etaIso) {
     const diffMs = new Date(etaIso).getTime() - Date.now();
     const mins = Math.round(diffMs / 60000);
-    if (mins <= 0 && diffMs > -60000) return { text: "Arriving", now: true };
-    if (mins <= 0) return { text: "Departed", now: false };
-    return { text: String(mins), now: mins <= 1 };
+    if (mins <= 0 && diffMs > -60000) return { text: "即將到站", isText: true, now: true };
+    if (mins <= 0) return { text: "已開出", isText: true, now: false };
+    return { text: String(mins), isText: false, now: mins <= 1 };
   }
 
-  function rowHtml(item, verb) {
+  function rowHtml(item) {
     const left = fmtLeft(item.eta);
     const clock = hhmm.format(new Date(item.eta));
-    const remark = (item.rmk_en || "").trim();
-    const seqLabel = ["1st", "2nd", "3rd"][item.eta_seq - 1];
+    const remark = (item.rmk_tc || item.rmk_en || "").trim();
+    const seqLabel = ["第 1 班", "第 2 班", "第 3 班"][item.eta_seq - 1];
     return `
       <div class="row${left.now ? " now" : ""}">
-        <div class="when">${verb} ${clock}${seqLabel ? ` · ${seqLabel} bus` : ""}</div>
-        <div class="mins">${left.text}${/^\d+$/.test(left.text) ? "<small>min</small>" : ""}</div>
+        <div class="when">${clock} 開出${seqLabel ? ` · ${seqLabel}` : ""}</div>
+        <div class="mins${left.isText ? " text" : ""}">${left.text}${left.isText ? "" : "<small>分鐘</small>"}</div>
         ${remark ? `<div class="rmk">${remark}</div>` : ""}
       </div>`;
   }
 
-  function renderBoard(container, rows, verb) {
+  function renderBoard(container, rows) {
     if (!rows.length) {
-      container.innerHTML = '<div class="empty">No upcoming departures are being reported right now.<br>This is normal late at night or if the service is suspended.</div>';
+      container.innerHTML = '<div class="empty">暫時沒有班次資料。<br>深夜或服務暫停時，這是正常情況。</div>';
       return;
     }
-    container.innerHTML = rows.map(r => rowHtml(r, verb)).join("");
+    container.innerHTML = rows.map(rowHtml).join("");
   }
 
   async function loadService(svc) {
     const container = document.querySelector(svc.el + " .board");
-    const verb = svc.dir === "O" ? "Departs" : "Departs";
     try {
       const res = await fetch(
         `https://rt.data.gov.hk/v2/transport/citybus/eta/${CO}/${svc.stop}/${ROUTE}`,
@@ -220,25 +223,26 @@
         .filter(d => d.dir === svc.dir && d.eta)
         .sort((a, b) => new Date(a.eta) - new Date(b.eta))
         .slice(0, 3);
-      renderBoard(container, rows, verb);
+      renderBoard(container, rows);
       return true;
     } catch (err) {
-      container.innerHTML = `<div class="empty">Could not reach the Citybus feed.<br><small>${String(err.message || err)}</small></div>`;
+      container.innerHTML = `<div class="empty">未能連線至城巴數據。<br><small>${String(err.message || err)}</small></div>`;
       return false;
     }
   }
 
   async function load() {
     refreshBtn.disabled = true;
-    setStatus("Refreshing…", "load");
+    setStatus("更新中…", "load");
     const results = await Promise.all(SERVICES.map(loadService));
     const ok = results.filter(Boolean).length;
+    const now = hhmm.format(new Date());
     if (ok === SERVICES.length) {
-      setStatus("Updated " + hhmm.format(new Date()) + " · auto-refresh 30 s", "");
+      setStatus("更新於 " + now + " · 每 30 秒自動更新", "");
     } else if (ok > 0) {
-      setStatus("Partly updated " + hhmm.format(new Date()) + " · retrying in 30 s", "err");
+      setStatus("部分線路更新失敗 · 30 秒後重試", "err");
     } else {
-      setStatus("Update failed — retrying in 30 s", "err");
+      setStatus("更新失敗 · 30 秒後重試", "err");
     }
     refreshBtn.disabled = false;
   }
