@@ -56,7 +56,7 @@
     line-height: 1.1;
     flex: none;
   }
-  /* 兔耳：呼應櫻島麻衣 */
+  /* 兔耳：呼應桜島麻衣 */
   .badge::before, .badge::after {
     content: "";
     position: absolute;
@@ -134,15 +134,40 @@
     border: 1px solid rgba(143,45,67,.28);
     box-shadow: 0 4px 14px rgba(0,0,0,.16);
   }
-  .mai-line {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin: 9px 2px 0;
-    font-size: 11.5px;
-    color: #e9a8b6;
+  /* ── 麻衣每日寄語 ── */
+  .mai-greet {
+    position: relative;
+    margin: 12px 2px 0;
+    padding: 11px 13px 12px;
+    background: #1a1f27;
+    border: 1px solid rgba(243,184,192,.26);
+    border-radius: 12px;
   }
-  .mai-line svg { width: 14px; height: 14px; flex: none; }
+  .mai-greet::before {
+    content: "";
+    position: absolute;
+    top: -6px;
+    left: 24px;
+    width: 11px;
+    height: 11px;
+    background: #1a1f27;
+    border-left: 1px solid rgba(243,184,192,.26);
+    border-top: 1px solid rgba(243,184,192,.26);
+    transform: rotate(45deg);
+  }
+  .mai-who { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; }
+  .mai-who svg { width: 13px; height: 13px; flex: none; color: var(--pink); }
+  .mai-name { font-size: 11px; font-weight: 600; letter-spacing: .08em; color: #e9a8b6; }
+  .mai-day {
+    margin-left: auto;
+    font-size: 9.5px;
+    color: var(--muted);
+    border: 1px solid rgba(139,152,165,.3);
+    border-radius: 999px;
+    padding: 1px 7px;
+    line-height: 1.5;
+  }
+  .mai-text { margin: 0; font-size: 12.5px; line-height: 1.75; color: #f0d3d9; }
 
   /* ── 班次 ── */
   .service { margin-top: 16px; border-top: 1px solid rgba(243,184,192,.17); padding-top: 14px; }
@@ -158,19 +183,6 @@
   }
   .service h2 .arrow { color: var(--accent); }
   .service h2 .sakura { width: 14px; height: 14px; flex: none; color: var(--pink); }
-  .mai-pill {
-    margin-left: auto;
-    flex: none;
-    font-size: 9.5px;
-    font-weight: 600;
-    letter-spacing: .1em;
-    color: #e9a8b6;
-    background: rgba(233,168,182,.07);
-    border: 1px solid rgba(233,168,182,.36);
-    border-radius: 999px;
-    padding: 2px 8px;
-    line-height: 1.5;
-  }
   .service .meta { margin-top: 3px; font-size: 11.5px; color: var(--muted); }
   .board { margin-top: 10px; display: grid; gap: 8px; }
 
@@ -293,16 +305,19 @@
       B3A 實時到站
     </figcaption>
   </figure>
-  <div class="mai-line">
-    <svg class="bunny" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.2 9.4C6.6 7 6.1 4.2 7 3.5c.9-.6 2.2 1.4 3 3.6"/><path d="M15.8 9.4c1.6-2.4 2.1-5.2 1.2-5.9-.9-.6-2.2 1.4-3 3.6"/><path d="M12 21c-3.5 0-5.8-2.3-5.8-5.2C6.2 12.1 8.7 9 12 9s5.8 3.1 5.8 6.8C17.8 18.7 15.5 21 12 21Z"/><circle cx="9.9" cy="14.2" r=".7" fill="currentColor" stroke="none"/><circle cx="14.1" cy="14.2" r=".7" fill="currentColor" stroke="none"/></svg>
-    兔女郎學姐 · 陪你等 B3A
-  </div>
+  <aside class="mai-greet" aria-label="桜島麻衣今日寄語">
+    <div class="mai-who">
+      <svg class="bunny" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.2 9.4C6.6 7 6.1 4.2 7 3.5c.9-.6 2.2 1.4 3 3.6"/><path d="M15.8 9.4c1.6-2.4 2.1-5.2 1.2-5.9-.9-.6-2.2 1.4-3 3.6"/><path d="M12 21c-3.5 0-5.8-2.3-5.8-5.2C6.2 12.1 8.7 9 12 9s5.8 3.1 5.8 6.8C17.8 18.7 15.5 21 12 21Z"/><circle cx="9.9" cy="14.2" r=".7" fill="currentColor" stroke="none"/><circle cx="14.1" cy="14.2" r=".7" fill="currentColor" stroke="none"/></svg>
+      <span class="mai-name">桜島麻衣</span>
+      <span class="mai-day">今日</span>
+    </div>
+    <p class="mai-text" id="mai-text"></p>
+  </aside>
 
   <section class="service" id="service-out">
     <h2>
       <svg class="sakura" viewBox="0 0 100 100" aria-hidden="true"><g fill="currentColor"><ellipse cx="50" cy="24" rx="11" ry="20"/><ellipse cx="50" cy="24" rx="11" ry="20" transform="rotate(72 50 50)"/><ellipse cx="50" cy="24" rx="11" ry="20" transform="rotate(144 50 50)"/><ellipse cx="50" cy="24" rx="11" ry="20" transform="rotate(216 50 50)"/><ellipse cx="50" cy="24" rx="11" ry="20" transform="rotate(288 50 50)"/><circle cx="50" cy="50" r="7"/></g></svg>
       富泰邨 <span class="arrow">→</span> 深圳灣口岸
-      <span class="mai-pill">麻衣</span>
     </h2>
     <div class="meta">上車站：富泰邨（青山公路）</div>
     <div class="board" aria-live="polite"></div>
@@ -312,7 +327,6 @@
     <h2>
       <svg class="sakura" viewBox="0 0 100 100" aria-hidden="true"><g fill="currentColor"><ellipse cx="50" cy="24" rx="11" ry="20"/><ellipse cx="50" cy="24" rx="11" ry="20" transform="rotate(72 50 50)"/><ellipse cx="50" cy="24" rx="11" ry="20" transform="rotate(144 50 50)"/><ellipse cx="50" cy="24" rx="11" ry="20" transform="rotate(216 50 50)"/><ellipse cx="50" cy="24" rx="11" ry="20" transform="rotate(288 50 50)"/><circle cx="50" cy="50" r="7"/></g></svg>
       深圳灣口岸 <span class="arrow">→</span> 富泰邨
-      <span class="mai-pill">麻衣</span>
     </h2>
     <div class="meta">上車站：深圳灣口岸總站</div>
     <div class="board" aria-live="polite"></div>
@@ -344,6 +358,49 @@
   const hhmm = new Intl.DateTimeFormat("en-GB", {
     hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "Asia/Hong_Kong"
   });
+
+  // 麻衣的每日寄語：依香港日期輪換，同一天所有人看到同一句
+  const GREETINGS = [
+    "「…別誤會，我只是剛好看到班次而已。」",
+    "「早點出門，就不用跑得那麼難看了。」",
+    "「趕時間的時候，更要看清班次。」",
+    "「證件帶好了嗎？別到了關口才翻袋。」",
+    "「人多就站穩點，別只顧著看手機。」",
+    "「天氣轉涼了，外套記得帶。」",
+    "「不是特意提醒你，只是順口說一句：車快到了。」",
+    "「錯過一班就等下一班，慌什麼。」",
+    "「…有我在，你不用一直盯著時間。」",
+    "「排隊的時候，耐心一點。」",
+    "「今天也平安出門，平安回來。」",
+    "「累了就早點回家，別硬撐。」",
+    "「遲到可不是什麼值得驕傲的事。」",
+    "「路線我幫你看過了，放心走吧。」",
+    "「別光顧著聊天，車是不會等你的。」",
+    "「過關前先確認班次，總沒壞處。」",
+    "「這種事還要我提醒你嗎？…算了。」",
+    "「回來的時候，也記得看最後一班。」",
+    "「風大的話，帽子戴好。」",
+    "「你安全到達，我就放心了。」"
+  ];
+
+  function hkDayNumber() {
+    try {
+      const parts = new Intl.DateTimeFormat("en-CA", {
+        timeZone: "Asia/Hong_Kong",
+        year: "numeric", month: "2-digit", day: "2-digit"
+      }).formatToParts(new Date());
+      const val = type => Number(parts.find(p => p.type === type).value);
+      return Math.floor(Date.UTC(val("year"), val("month") - 1, val("day")) / 86400000);
+    } catch (e) {
+      return Math.floor(Date.now() / 86400000);
+    }
+  }
+
+  function renderGreeting() {
+    const el = document.getElementById("mai-text");
+    if (el) el.textContent = GREETINGS[hkDayNumber() % GREETINGS.length];
+  }
+  renderGreeting();
 
   function setStatus(text, kind) {
     statusEl.textContent = text;
@@ -401,6 +458,7 @@
   }
 
   async function load() {
+    renderGreeting();
     refreshBtn.disabled = true;
     setStatus("更新中…", "load");
     const results = await Promise.all(SERVICES.map(loadService));
